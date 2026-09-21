@@ -1,0 +1,47 @@
+# ctfcli challenge spec. Contains the flag.
+name: "Mission Creep"
+author: "XposedOrNot"
+category: "Lab"
+type: standard
+value: 400
+state: visible
+version: "0.1"
+
+description: |
+  [ FILE REF: S1E3 "MISSION CREEP" // NODE COMPROMISED - POST-INCIDENT ]
+
+  It started small. One door left unlocked. It never stays small.
+
+  A foothold became a habit. A habit became a key. A key became the
+  whole house. By the time anyone noticed, the operator had been
+  living inside this machine for longer than they would admit, and
+  had taken what they came for.
+
+  The machine is offline now. I have its disk. Everything they did is
+  still written here, even the parts they tried to erase.
+
+  Walk it forward. Find where they entered, how they stayed, how they
+  became root, and what they carried out. The last of those is the
+  flag.
+
+    [ disk image attached ]
+
+    - THE MACHINE
+
+flags:
+  - "number{a_foothold_is_never_just_a_foothold}"
+
+tags:
+  - "L400"
+
+# Challenge file is a release asset, not in this repo:
+# https://github.com/WatchlistCTF/Watchlist-CTF/releases/download/2026-files/L400-mission-creep.7z
+files: []
+
+hints:
+  - content: "Do not poke around at random. Mount read-only and build a super-timeline (log2timeline/plaso, or fls + mactime). One window will light up with activity, that is where the operator was. Start there and walk forward."
+    cost: 60
+  - content: "Each stage hands you the next. The webshell in the access logs downloaded its second stage; the persistence unit names a script; the script leads to how they became root. Do not try to find the flag directly, find the next artifact."
+    cost: 120
+  - content: "For root: a system binary was replaced, compare against the package (dpkg --verify / debsums) and check the timeline, then strings/gdb it for the trigger. For the end: they wiped history and wtmp, but the wipe is evidence and they missed something, a core dump or a staged archive still holds what they carried out. That is the flag."
+    cost: 180

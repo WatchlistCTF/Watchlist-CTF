@@ -1,0 +1,47 @@
+# ctfcli challenge spec. Contains the flag.
+name: "Pilot"
+author: "XposedOrNot"
+category: "PoI"
+type: standard
+value: 100
+state: visible
+version: "0.1"
+
+description: |
+  [ FILE REF: S1E1 "PILOT" // NEW NUMBER // CONTEXT: NONE ]
+
+  A number came up. I am giving it to you because I have no one else,
+  and because you have spent this whole operation learning to see.
+
+  I will tell you almost nothing. That is the point. I do not get
+  context. I get a number, and a certainty that something is coming.
+  The rest is yours to find.
+
+  Here is what surfaced with them. Tell me who they are.
+
+  One more thing, before you decide what you think of this person.
+  The evidence says they are dangerous. I am not certain the evidence
+  is honest.
+
+  Find their file. Give me their designation number.
+
+    [ dossier attached: 3 items ]
+
+    - THE MACHINE
+
+flags:
+  - "number{558247193}"
+
+tags:
+  - "P100"
+
+files:
+  - files/1f97c207100afb1e.zip
+
+hints:
+  - content: "You will not find who they are by reading. Look at what is attached to each file, image EXIF (exiftool), the PDF's document properties (pdfinfo), and read the messages closely. The facts are in the metadata and the details, not the text."
+    cost: 15
+  - content: "The Machine identifies people by number. You are assembling a nine-digit designation, and each of the three items carries a piece of it, something that looks like an ID badge, an employee record, and a reference number."
+    cost: 30
+  - content: "Badge in the photo is the first three digits. The PDF hides a field under a redaction (the text is still there), the middle two. The reference number in the messages, the last four. Assemble in that order. And note the date, time, and place in the messages, you will need them next."
+    cost: 45

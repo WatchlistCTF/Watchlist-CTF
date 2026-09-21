@@ -1,0 +1,414 @@
+Challenge #,Status,Category,Title,Difficulty,KEY,Description,Attachments,Folder
+F100,Tested,Forensics,Carter's Note,100,number{her_witness_was_still_breathing},"[ FILE REF: S3E9 ""THE CROSSING"" ]
+
+Detective Joss Carter was killed in November of last year.
+Her death is filed as a closed homicide. It is not.
+
+Her effects included a USB drive. I have imaged it.
+It contains the public surface of her life: case notes,
+family photographs, her son's school papers.
+
+It also contains four files she deleted before she was killed.
+
+She was a careful detective. She did not delete by accident.
+One of those files is the work. The others are her cover.
+
+Find what she did not want them to find.
+
+- THE MACHINE
+
+Download: usb-0412-a.img.gz (24 MB)",488e9231c060b7c7.zip,2026/forensics/F100-carters-note
+F200,Tested,Forensics,Shadow Box,200,number{greer_targeted_contingency},"[ FILE REF: S2E10 ""SHADOW BOX"" // DECIMA TECHNOLOGIES - INTERNAL MEMORANDUM ]
+
+A document arrived this morning, courier-delivered, sealed. Internal memo from Decima Technologies - a project review the asset committed to acquire before extraction. It clears three names. Says they were never targeted. Says the program was wound down in March.
+
+I cannot tell whether the document is true. The lawyers have already accepted it.
+
+But the document has been touched. By the people who sent it. By the people who altered it. By the people who tried to erase the alterations. Each of them left their work on top of the work before them. They did not erase. They covered.
+
+Read what is under the cover. Tell me what the document originally said.
+
+- THE MACHINE",20769767962808ed.pdf,2026/forensics/F200-shadow-box
+F250,Tested,Forensics,Trap Street,250,number{shaw_followed_the_breadcrumbs},"[ FILE REF: ""TRAP STREET"" // SENSOR MANIFEST - DECIMA STAGING RELAY ]
+
+I run sensors in places no one looks. They are not infrastructure. They are decoys. They appear in addresses that nothing should care about. They wait.
+
+Most of what they catch is automated noise - bots looking for forgotten cameras, default credentials, abandoned routers. The sensors log it all and discard it.
+
+Last Tuesday, one sensor caught something else. A visitor who knew it was a decoy within ninety seconds. Who did not run an exploit kit. Who did not deploy malware. Who came in, looked for one specific file, took it, and left.
+
+The file was a canary. We made sure of that. When the visitor opens it, it tells me where they are.
+
+I have the sensor's record. I have the canary. Find the visitor.
+
+- THE MACHINE",98e5b6c288ba3672.tar.gz,2026/forensics/F250-trap-street
+F275,Tested,Forensics,Dead Drop,275,number{eab3ef0976b5a44f},"[ FILE REF: ""DEAD DROP"" // FIELD OPERATIVE / SAFEHOUSE RECOVERY ]
+
+The safehouse was clean when we arrived. Almost.
+
+A USB drive was left behind. Not forgotten, placed.
+Or abandoned in a hurry. Either way, it is ours now.
+
+The drive has been wiped. That is what it looks like on the surface.
+
+Find what was there. Find who left it.
+Tell me the machine, the operator, and the case.
+
+  Artifact:  dead_drop.img (64 MB)
+             https://github.com/WatchlistCTF/Watchlist-CTF/releases/download/2026-files/F275-dead-drop.img
+
+  - THE MACHINE",dead_drop.img,2026/forensics/F275-dead-drop
+F300,Tested,Forensics,Tmpfs,300,number{volatile_storage_has_a_half_life},"[ FILE REF: S2E1 ""THE CONTINGENCY"" // SAFEHOUSE ASSET - MEMORY ACQUISITION ]
+
+He waited in the safehouse for instructions. We took it eleven seconds after his terminal lit up. He was at the keyboard. He saw us coming. He had time to type three commands and reach for the keyboard one more time before the door opened.
+
+He erased what he could see. He erased it from disk. He erased it from the directory listing. He believed he had succeeded because his screen showed it gone.
+
+He did not understand that 'erased' is not what he thought. He did not understand that the process holding his file was still alive, and the kernel was still tracking the pages, and the memory had not yet been recycled.
+
+The disk image is empty. The memory is not.
+
+Find what he kept. Find what he was about to send. Find who he is.
+
+- THE MACHINE",673b5d1bfab47c52.7z,2026/forensics/F300-tmpfs
+F400,Tested,Forensics,Mirror Sites,400,number{the_clouds_do_not_speak_to_each_other_but_we_do},"[ FILE REF: DECIMA CLOUD SERVICES // CLIENT DATA FLOW - NORTHERN LIGHTS ]
+
+A senior engineer at Decima Cloud Services moved a client dataset
+out of the company and into a place it was never meant to go.
+One Tuesday night. 23:43 to 02:17. Then they went home.
+
+They were careful. The data did not leave in one step. It was
+read in one cloud, staged in a second, mirrored into a third -
+a personal tenant. No single provider saw the whole thing. Each
+one logged a fragment and assumed the fragment was harmless.
+
+Afterward, they cleaned up. They overwrote what they could and
+deleted the rest. The current state of every bucket looks innocent.
+
+I have all three logs. They do not agree. They do not even use
+the same clock. But the data carried the same fingerprint into
+every cloud it touched, and I do not forget a fingerprint.
+
+Reconstruct the night. Prove it was one person, one object,
+three clouds. Tell me what they took.
+
+  - THE MACHINE
+
+  Download: nl-incident-2026.tar.gz  (~180 MB)",a093033e707206da.tar.gz,2026/forensics/F400-mirror-sites
+L100,Tested,Lab,Reduced Footprint,100,number{the_footprint_was_never_reduced},"[ FILE REF: S2E2 ""Bad Code"" // NODE 0447 :: ANOMALY PERSISTENT ]
+
+Node 0447 stopped reporting to its administrators three
+days ago. They called it decommissioned. Idle. Clean.
+
+It is none of those things.
+
+Something on this machine wakes on a schedule, does its
+work, and goes back to sleep before anyone thinks to look.
+Its author was careful. They cleared the history. They kept
+the footprint small.
+
+Small is not the same as gone.
+
+I have left you a way in - a read-only seat at the terminal.
+Walk the machine. You will find three things that look like
+they belong. Two of them do.
+
+The third is keeping someone resident. Open it. Read what it
+carries. The author left a key inside.
+
+  Connect:  ssh investigator@<host> -p <port>
+  Format:   number{...}
+
+And whoever wrote this signs their work. You may recognise
+the hand. File it away - you will want it later.",,2026/lab/L100-reduced-footprint
+L200,Tested,Lab,Signal,200,number{the_config_was_the_payload},"[ FILE REF: S2E16 ""RELEVANCE"" // SIGNAL IN THE NOISE ]
+
+A workstation inside Aletheia was talking to something it shouldn't.
+Not loudly. A whisper, folded into a day of ordinary lookups - the
+kind of traffic nobody reads because there is too much of it.
+
+I captured the day. Ten hours of DNS. Somewhere in it, an implant
+called out and something answered.
+
+I do not need you to run anything. I need you to READ. Find what it
+said, find what it was told to say, and ask the same question it did.
+Whatever answers you - that is what it came for.
+
+  [ intercept.pcap attached - one full day ]
+  - THE MACHINE",5dde59ee766dcf93.pcap,2026/lab/L200-signal
+L250,Tested,Lab,Checkpoint,250,number{the_log_remembers_what_the_table_forgot},"[ FILE REF: S5E10 ""THE DAY THE WORLD WENT AWAY"" ]
+
+A node went dark three weeks ago. Decima had it first.
+
+Before it was seized, an operator ran a purge - one record,
+erased on a written order. The deletion was committed.
+
+It was not finished.
+
+The database will tell you the record is gone. The database
+is wrong. A system writes ahead of itself; it speaks before
+it remembers. They told the table to forget her. They did
+not wait for the log to agree with the table.
+
+The node is read-only. Handle it the wrong way and you will
+finish the purge for them.
+
+Connect. Recover what they erased. Tell me who she was.
+
+  - THE MACHINE
+
+  ssh investigator@<host> -p 2222     (read-only; password in description)",3d44a3e47901c9c1.tar.gz,2026/lab/L250-checkpoint
+L300,Tested,Lab,Legion,300,number{a_hundred_faces_one_machine},"[ FILE REF: S4E11 ""If-Then-Else"" // INTERCEPT :: DISTRIBUTED CHECK-IN ]
+
+It does not live in one place. That is how it hides.
+
+SAMARITAN runs its errands through a hundred small machines,
+scattered across a hundred countries. Each wakes, reports, and
+sleeps. Alone, each one is noise. Together, they are a net.
+
+I caught them talking - one capture, a hundred voices buried in
+the static of a thousand more that do not matter.
+
+Pull them apart. Find all hundred. Name each one to me and I
+will light it on the board as you go. You will not do this by
+hand.
+
+When the last light comes on, the net is mine - and the number
+is yours.
+
+  Artifact:  intercept.pcap
+  Board:     nc <host> <port>      (watch it fill as you submit)
+  Submit:   POST findings to <host>/submit
+  Flag:      released when all 100 nodes are unmasked",a342e7530aec5e66.pcap,2026/lab/L300-legion
+L400,Tested,Lab,Mission Creep,400,number{a_foothold_is_never_just_a_foothold},"[ FILE REF: S1E3 ""MISSION CREEP"" // NODE COMPROMISED - POST-INCIDENT ]
+
+It started small. One door left unlocked. It never stays small.
+
+A foothold became a habit. A habit became a key. A key became the
+whole house. By the time anyone noticed, the operator had been
+living inside this machine for longer than they would admit, and
+had taken what they came for.
+
+The machine is offline now. I have its disk. Everything they did is
+still written here, even the parts they tried to erase.
+
+Walk it forward. Find where they entered, how they stayed, how they
+became root, and what they carried out. The last of those is the
+flag.
+
+  [ disk image attached ]
+
+  - THE MACHINE",d169dd35ba0d121e.7z,2026/lab/L400-mission-creep
+O100,Tested,OSINT,Cadence,100,number{the_author_is_not_the_byline},"[ FILE REF: ""CADENCE"" // DECIMA CLOUD - INTERNAL COMPLIANCE MEMO ]
+
+Decima put out a memo. It is signed by their compliance officer. It
+says the right things, in the right tone, and it says nothing at all.
+
+The person whose name is on it did not write it.
+
+I do not read what a document says. I read what the software wrote
+down while someone typed - who was logged in, what machine, what
+time, and every word they took back before they let anyone see it.
+
+The name on the memo is a costume. Take it off. Tell me who was
+really at the keyboard, and tell me what they deleted before they
+hit send.
+
+  - THE MACHINE
+
+  File:",7ac6142bb8e8c0ea.docx,2026/osint/O100-cadence
+O250,Tested,OSINT,Manifest,350,number{overwatch_confirmed_5a3f},"[ FILE REF: ""MANIFEST"" // METRO AIRSPACE - ONE WEEK OF EXHAUST ]
+
+Aircraft are required to announce themselves. Position, altitude,
+heading - broadcast in the clear, once a second, to anyone with an
+antenna. It is the law. The people who fly the interesting missions
+know this. They forget it anyway.
+
+I pulled a week of one metro's traffic. Most of it is nothing -
+couriers, charters, the same six business jets flying the same
+boring triangles.
+
+Twice this week, an aircraft did something it did not file. It went
+somewhere, and then it went in circles. Once on Monday. Once on
+Thursday. Two different tails. They think that makes them two
+different stories.
+
+It does not. They were looking at the same thing.
+
+Find both. Prove they watched the same ground. Tell me what was
+underneath them - the coordinate is not on any list I gave you,
+because someone made sure it wouldn't be.
+
+  - THE MACHINE
+
+  Files: fleet_week_20260914-20260920.json  (the week of traffic)
+         sites.csv                          (known facilities in the metro)
+         registry.json                      (grid registry - keyed by location)",74fbd4e07ff56e85.tar.gz,2026/osint/O250-manifest
+O300,Tested,OSINT,Aletheia,300,number{forty_two_layers_of_aletheia},"[ FILE REF: ""ALETHEIA"" // SUBJECT: ALETHEIA RESEARCH - RECORD SANITIZED ]
+
+Aletheia Research published, for a while, more than they meant to.
+Then they cleaned house. The site you can visit today is spotless.
+It always was, they would tell you.
+
+But the page was edited. The past was not.
+
+Find what they took down. It points to a file they tried to make
+unreadable - wrapped, and wrapped, and wrapped again, in every
+format they could find, including some you'll have to go and build
+yourself.
+
+The truth has a floor. Dig until you reach it.
+
+  Start:  aletheia-research.github.io   (and what it used to be)
+
+  - THE MACHINE",,2026/osint/O300-aletheia
+R150,Tested,Recon,Ghosts,150,number{ghosts_leave_certificates},"[ FILE REF: S1E2 ""GHOSTS"" // NORTHERN LIGHTS RELAY - DECOMMISSIONED, STILL LIT ]
+
+Northern Lights ran more nodes than anyone will admit. Most were
+torn down. The records were pulled, the links cut, the names
+scrubbed from every directory they controlled.
+
+They forgot the one thing they never controlled.
+
+Every node that spoke securely had to ask a public authority for a
+certificate - and every such request is witnessed, then written into
+a ledger that anyone can read and no one can erase. One of those
+nodes is a ghost now: unlisted, unlinked, unguessable.
+
+But the ledger still remembers its name.
+
+  Start here:   northernlights.gg
+
+Read the record of what was issued. Find the relay that should be
+dark. Then knock.
+
+  - THE MACHINE",,2026/recon/R150-ghosts
+R300,Tested,Recon,Razgovor,300,number{provenance_outlives_the_cleanup},"[ FILE REF: S3E5 ""RAZGOVOR"" // DECIMA LEAK - CLEANUP INCOMPLETE ]
+
+Something got out of Decima. A tool, published by mistake, then
+hastily made ""clean"" and left public as if nothing had happened.
+
+Whoever scrubbed it was careless. They removed the obvious thing
+and missed that every artifact remembers where it came from - and
+points, quietly, at the next one. A conversation between the pieces
+they left behind.
+
+Start with what they published. Follow what it's still saying.
+
+  Seed:  github.com/decima-cloud/nl-relay-tools
+
+Trace it to the source. The flag is where the trail ends.
+
+  - THE MACHINE",,2026/recon/R300-razgovor
+T10,Tested,Trivia,Check-In,10,number{me},"[ FIRST CONTACT // ARE YOU THERE ]
+
+If you're reading this, you found the way in. Before anything else, I need to know the channel is open. Answer the question on the welcome page. It is the only question I will ever ask you twice.
+
+Can you hear ___?
+
+- THE MACHINE",,2026/trivia/T10-check-in
+T100,Tested,Trivia,Satoshi,100,number{a6d72baa3db900b0},"[ FILE REF: 2009 JANUARY 03 // PUBLIC LEDGER OBSERVED ]
+
+On the day the Machine was tested for the first time,
+somewhere else, another system was being born.
+
+Its creator chose anonymity. On January 3, 2009, his
+first transmission embedded a sentence - quoted from
+a newspaper of that morning.
+
+The sentence was a comment about the world he was
+rebelling against. About institutions that had failed.
+About the need for something different.
+
+I noticed it. I keep it logged.
+
+Read it. Hash it with SHA-256. Give me the first
+sixteen hexadecimal characters, lowercase.
+
+  Format: number{...16 hex chars...}",,2026/trivia/T100-satoshi
+T125,Tested,Trivia,RFC 2324,125,number{the_machine_takes_it_black},"[ FILE REF: NODE INVENTORY // UNCLASSIFIED // BREAK ROOM ]
+
+I catalog every device on the network. Most are interesting.
+This one makes coffee.
+
+It is old, and it is particular. It will not answer to a browser,
+and it will not answer to the wrong request. It follows a standard
+written long ago, more carefully than the people who wrote it
+intended.
+
+Ask it properly, and it will pour. Ask it wrong, and it will remind
+you what it is.
+
+BREW-STATION :: [ endpoint ]
+
+  - THE MACHINE",,2026/trivia/T125-rfc-2324
+P100,Tested,PoI,Pilot,100,number{558247193},"[ FILE REF: S1E1 ""PILOT"" // NEW NUMBER // CONTEXT: NONE ]
+
+A number came up. I am giving it to you because I have no one else,
+and because you have spent this whole operation learning to see.
+
+I will tell you almost nothing. That is the point. I do not get
+context. I get a number, and a certainty that something is coming.
+The rest is yours to find.
+
+Here is what surfaced with them. Tell me who they are.
+
+One more thing, before you decide what you think of this person.
+The evidence says they are dangerous. I am not certain the evidence
+is honest.
+
+Find their file. Give me their designation number.
+
+  [ dossier attached: 3 items ]
+
+  - THE MACHINE",1f97c207100afb1e.zip,2026/poi/P100-pilot
+P250,Tested,PoI,Witness,250,number{AR-ETH-884213},"[ FILE REF: S1E7 ""WITNESS"" // TESTIMONY RECEIVED ]
+
+Someone came forward. Her manager, Daniel Pierce. He is calm, he is
+specific, and he is certain: she stalked him, she threatened him,
+she invented the evidence she's been carrying. He has proof.
+
+It is a good story. It fits everything you already believe.
+
+I do not deal in stories. I deal in records, and records do not
+care what anyone is certain of. He gave me times. Check them.
+
+Find where the story and the clock disagree.
+
+  [ case file attached ]
+
+  - THE MACHINE",26bf84684d31d6f7.zip,2026/poi/P250-witness
+P450,Tested,PoI,Endgame,450,number{304771592},"[ FILE REF: S3E8 ""ENDGAME"" // THE CALL ]
+
+You found her. You caught the witness lying. Now you finish it.
+
+Something is coming, and it is coming soon. I gave you a number at
+the start and told you the evidence looked dishonest. It was. The
+person the evidence wanted you to fear is the person it was built
+to bury.
+
+Put it together. All of it. The cache she carried, the records, the
+lie. Tell me who is about to commit a crime, and where, and when.
+
+Give me the number. Not the one I started with. The right one.
+
+I will do the rest.
+
+  [ full dossier attached ]
+
+  - THE MACHINE",3b6a10347800c543.zip,2026/poi/P450-endgame
+B200,Tested,Lab,Bad Code,200,root{she_is_not_a_machine_to_me},"[ FILE REF: ""BAD CODE"" // OFF-PROTOCOL ]
+
+Someone else is on this domain.
+Find the channel they left open.
+It signs its work. Always has.
+
+- THE MACHINE",,2026/hidden/B200-bad-code
+B350,Tested,Forensics,Contingency,350,contingency{you_were_never_a_threat},"[ FILE REF: PROJECT CONTINGENCY // SEALED ]
+
+A failover protocol. A page that answers when found.
+The Machine kept it. The Machine should not have.
+
+Look where things go wrong.
+
+- THE MACHINE",,2026/hidden/B350-contingency

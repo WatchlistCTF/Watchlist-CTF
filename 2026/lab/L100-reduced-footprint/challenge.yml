@@ -1,0 +1,50 @@
+# ctfcli challenge spec. Contains the flag.
+name: "Reduced Footprint"
+author: "XposedOrNot"
+category: "Lab"
+type: standard
+value: 100
+state: visible
+version: "0.1"
+
+description: |
+  [ FILE REF: S2E2 "Bad Code" // NODE 0447 :: ANOMALY PERSISTENT ]
+
+  Node 0447 stopped reporting to its administrators three
+  days ago. They called it decommissioned. Idle. Clean.
+
+  It is none of those things.
+
+  Something on this machine wakes on a schedule, does its
+  work, and goes back to sleep before anyone thinks to look.
+  Its author was careful. They cleared the history. They kept
+  the footprint small.
+
+  Small is not the same as gone.
+
+  I have left you a way in - a read-only seat at the terminal.
+  Walk the machine. You will find three things that look like
+  they belong. Two of them do.
+
+  The third is keeping someone resident. Open it. Read what it
+  carries. The author left a key inside.
+
+    Connect:  ssh investigator@<host> -p <port>
+    Format:   number{...}
+
+  And whoever wrote this signs their work. You may recognise
+  the hand. File it away - you will want it later.
+
+flags:
+  - "number{the_footprint_was_never_reduced}"
+
+tags:
+  - "L100"
+
+files: []
+
+hints:
+  - content: "Persistence lives in the things that run without anyone logging in: scheduled jobs, shell-init files, and service definitions. Three artifacts will look suspicious. Verify each, most 'suspicious' things on a real box are perfectly legitimate."
+    cost: 20
+  - content: "The real one hides under a system service. Read the service definitions in /etc/systemd/system/, follow the ExecStart path, and do not forget hidden directories (ls -a). The flag is encoded inside the script, and the script shows you how to decode it."
+    cost: 40

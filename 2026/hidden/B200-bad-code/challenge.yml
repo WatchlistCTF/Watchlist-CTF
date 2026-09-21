@@ -1,0 +1,27 @@
+# ctfcli challenge spec. Contains the flag.
+name: "Bad Code"
+author: "XposedOrNot"
+category: "Lab"
+type: standard
+value: 200
+state: hidden
+version: "0.1"
+
+description: |
+  [ FILE REF: "BAD CODE" // OFF-PROTOCOL ]
+
+  Someone else is on this domain.
+  Find the channel they left open.
+  It signs its work. Always has.
+
+  - THE MACHINE
+
+flags:
+  - "root{she_is_not_a_machine_to_me}"
+
+tags:
+  - "B200"
+
+files: []
+
+hints: []

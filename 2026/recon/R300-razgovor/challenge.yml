@@ -1,0 +1,43 @@
+# ctfcli challenge spec. Contains the flag.
+name: "Razgovor"
+author: "XposedOrNot"
+category: "Recon"
+type: standard
+value: 300
+state: visible
+version: "0.1"
+
+description: |
+  [ FILE REF: S3E5 "RAZGOVOR" // DECIMA LEAK - CLEANUP INCOMPLETE ]
+
+  Something got out of Decima. A tool, published by mistake, then
+  hastily made "clean" and left public as if nothing had happened.
+
+  Whoever scrubbed it was careless. They removed the obvious thing
+  and missed that every artifact remembers where it came from - and
+  points, quietly, at the next one. A conversation between the pieces
+  they left behind.
+
+  Start with what they published. Follow what it's still saying.
+
+    Seed:  github.com/decima-cloud/nl-relay-tools
+
+  Trace it to the source. The flag is where the trail ends.
+
+    - THE MACHINE
+
+flags:
+  - "number{provenance_outlives_the_cleanup}"
+
+tags:
+  - "R300"
+
+files: []
+
+hints:
+  - content: "The repo you were given is sanitized at HEAD. It was not always. Read its history, git log -p --all, the reflog, or run gitleaks. Something was committed, then 'removed.'"
+    cost: 40
+  - content: "The bucket's image looks innocent because you are looking at the pixels. Look at its metadata instead, exiftool. Check the custom comment fields, and extract the embedded thumbnail (-b -ThumbnailImage): the crop did not remove what the thumbnail still remembers."
+    cost: 80
+  - content: "The page has no link to where you need to go, but the browser was shipped a map of the original source. Grab app.js.map (or check for an exposed .git/) and read the routes it references, one of them is the endpoint that answers."
+    cost: 120

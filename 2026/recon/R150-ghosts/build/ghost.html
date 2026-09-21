@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>XONNIE NODE - DECOMMISSIONED</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg:       #060C14;
+      --surface:  #0A1220;
+      --border:   #152035;
+      --border-hi:#1E3050;
+      --text:     #8A9BB0;
+      --text-dim: #3A5070;
+      --red:      #C62828;
+      --red-dim:  #7B1A1A;
+      --green:    #1CA66A;
+      --green-dim:#0D4A30;
+      --mono:     "IBM Plex Mono", "Courier New", monospace;
+    }
+    html, body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--mono);
+      font-size: 13px;
+      line-height: 1.7;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    .classbar {
+      background: var(--red-dim);
+      border-bottom: 1px solid var(--red);
+      padding: 4px 0;
+      text-align: center;
+      font-size: 10px;
+      letter-spacing: 3px;
+      color: #EF9A9A;
+    }
+    main {
+      flex: 1;
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 48px 32px 60px;
+      width: 100%;
+    }
+    .node-header {
+      border-bottom: 1px solid var(--border-hi);
+      padding-bottom: 24px;
+      margin-bottom: 32px;
+    }
+    .node-id {
+      font-size: 22px;
+      font-weight: 500;
+      letter-spacing: 4px;
+      color: #FFFFFF;
+      margin-bottom: 6px;
+      text-transform: uppercase;
+    }
+    .node-domain {
+      font-size: 11px;
+      color: var(--text-dim);
+      letter-spacing: 2px;
+    }
+    .status-block {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 14px;
+      padding: 6px 14px;
+      border: 1px solid var(--red);
+      background: rgba(198,40,40,0.06);
+    }
+    .status-dot {
+      width: 7px; height: 7px;
+      border-radius: 50%;
+      background: var(--red);
+    }
+    .status-label {
+      font-size: 10px;
+      letter-spacing: 3px;
+      color: var(--red);
+      text-transform: uppercase;
+    }
+    .field-grid {
+      display: grid;
+      grid-template-columns: 180px 1fr;
+      gap: 0;
+      margin-bottom: 32px;
+    }
+    .field-label {
+      color: var(--text-dim);
+      font-size: 10px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      padding: 9px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .field-value {
+      color: var(--text);
+      padding: 9px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .field-value.highlight { color: #FFFFFF; }
+    .ghost-block {
+      background: var(--surface);
+      border: 1px solid var(--border-hi);
+      border-left: 3px solid var(--green);
+      padding: 24px 28px;
+      margin-bottom: 32px;
+    }
+    .ghost-label {
+      font-size: 9px;
+      letter-spacing: 3px;
+      color: var(--green);
+      margin-bottom: 16px;
+      text-transform: uppercase;
+    }
+    .ghost-message {
+      font-size: 13px;
+      color: var(--text);
+      line-height: 2;
+      margin-bottom: 24px;
+    }
+    .ghost-message em {
+      color: #FFFFFF;
+      font-style: normal;
+    }
+    .flag-block {
+      background: rgba(28,166,106,0.06);
+      border: 1px solid var(--green);
+      padding: 14px 20px;
+      margin-top: 16px;
+    }
+    .flag-label {
+      font-size: 9px;
+      letter-spacing: 3px;
+      color: var(--green);
+      margin-bottom: 8px;
+      text-transform: uppercase;
+    }
+    .flag-value {
+      font-size: 15px;
+      font-weight: 500;
+      color: #FFFFFF;
+      letter-spacing: 1px;
+      word-break: break-all;
+    }
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 14px 32px;
+      text-align: center;
+      font-size: 10px;
+      color: var(--text-dim);
+      letter-spacing: 1px;
+    }
+  </style>
+</head>
+<body>
+  <div class="classbar">XONNIE RELAY NETWORK // NODE STATUS // RESTRICTED ACCESS</div>
+
+  <main>
+    <div class="node-header">
+      <div class="node-id">RELAY-843481</div>
+      <div class="node-domain" id="node-domain">relay-843481.xonnie.ai</div>
+      <div class="status-block">
+        <span class="status-dot"></span>
+        <span class="status-label">DECOMMISSIONED</span>
+      </div>
+    </div>
+
+    <div class="field-grid">
+      <div class="field-label">Node Type</div>
+      <div class="field-value">Relay</div>
+
+      <div class="field-label">Region</div>
+      <div class="field-value">US-EAST-1</div>
+
+      <div class="field-label">Decommissioned</div>
+      <div class="field-value highlight">2023-04-19</div>
+
+      <div class="field-label">Last Contact</div>
+      <div class="field-value">2023-04-19 03:30 UTC</div>
+
+      <div class="field-label">Decommission Reason</div>
+      <div class="field-value">SCHEDULED RETIREMENT</div>
+
+      <div class="field-label">DNS Resolution</div>
+      <div class="field-value">TERMINATED</div>
+
+      <div class="field-label">Certificate</div>
+      <div class="field-value">EXPIRED</div>
+
+      <div class="field-label">Data Status</div>
+      <div class="field-value">ARCHIVED</div>
+    </div>
+
+    <div class="ghost-block">
+      <div class="ghost-label">// Transmission</div>
+      <div class="ghost-message">
+        NODE STATUS: <em>DECOMMISSIONED</em><br>
+        This relay was removed from service. It should not be reachable.<br>
+        And yet - here you are.<br><br>
+        You found me the only way left: I asked for a certificate once,<br>
+        and the log never forgets.
+      </div>
+
+      <div class="flag-block">
+        <div class="flag-label">[ FLAG ]</div>
+        <div class="flag-value">number{TEST_FLAG_DO_NOT_SUBMIT}</div>
+      </div>
+    </div>
+  </main>
+
+  <footer>XONNIE RELAY NETWORK // NORTHERN LIGHTS PROGRAMME // ALL ACCESS LOGGED</footer>
+
+  <script>
+    var h = window.location.hostname;
+    if (h) document.getElementById('node-domain').textContent = h;
+  </script>
+</body>
+</html>

@@ -1,0 +1,333 @@
+<!--
+  WATCHLIST CTF - B200 "Bad Code"  ::  /badcode  (Root's hidden channel)
+  Self-contained: no external fonts/scripts/requests. Drops into a CTFd Custom Page.
+  Standalone (opened as a file): validates the flag locally.
+  Inside CTFd: if window.init.csrfNonce exists, POSTs to the attempt endpoint.
+  Set CHAL_ID below at deploy time (Option A: Anonymized challenge).
+  (The flag lives only in the JS below - client-side-reachable by design; the
+   experience is the discovery + the console reveal, not a vault.)
+-->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>·</title>
+<style>
+  :root{
+    --bg:#0c0907; --bg2:#140d08;
+    --root:#ffc56d;            /* Root - warm amber-gold */
+    --root-dim:#b07f3e;
+    --phosphor:#62f0a0;        /* her accents */
+    --cold:#9fb3c8;            /* Samaritan - clinical blue-grey */
+    --cold-dim:#566578;
+    --alert:#ff5b5b;
+    --glow:rgba(255,197,109,.30);
+    --mono:ui-monospace,"SF Mono","JetBrains Mono",Menlo,Consolas,"Liberation Mono",monospace;
+  }
+  *{box-sizing:border-box}
+  html,body{height:100%}
+  body{
+    margin:0; background:radial-gradient(120% 100% at 30% 0%,var(--bg2),var(--bg) 70%);
+    color:var(--root); font-family:var(--mono); font-size:16px; line-height:1.55;
+    overflow:hidden; letter-spacing:.2px;
+  }
+  /* CRT atmosphere */
+  .crt{position:fixed; inset:0; pointer-events:none; z-index:9}
+  .crt::before{ /* scanlines */
+    content:""; position:absolute; inset:0;
+    background:repeating-linear-gradient(180deg,rgba(0,0,0,0) 0 2px,rgba(0,0,0,.22) 2px 3px);
+    mix-blend-mode:multiply; opacity:.5;
+  }
+  .crt::after{ /* vignette + warm bloom */
+    content:""; position:absolute; inset:0;
+    background:radial-gradient(130% 110% at 35% 30%,transparent 55%,rgba(0,0,0,.55) 100%);
+  }
+  @keyframes flick{0%,100%{opacity:.97}48%{opacity:.93}50%{opacity:1}}
+  .flicker{animation:flick 7s infinite steps(1)}
+
+  .wrap{position:relative; z-index:1;
+    display:flex; flex-direction:column; justify-content:flex-start;
+    /* deliberately off-centre, a real person's lopsided workspace */
+    max-width:760px; margin:0 auto 0 max(6vw,32px); padding:8vh 24px 40px;
+    min-height:calc(100vh - 150px); /* reserve height so the footer sits still from first paint */
+  }
+  #screen{min-height:0; flex:0 1 auto}
+  .line{white-space:pre-wrap; word-break:break-word; margin:0 0 2px}
+  .cold{color:var(--cold); text-shadow:0 0 6px rgba(159,179,200,.25); letter-spacing:1px}
+  .cold .k{color:var(--cold-dim)}
+  .alert{color:var(--alert); text-shadow:0 0 10px rgba(255,91,91,.5); font-weight:600}
+  .root{color:var(--root); text-shadow:0 0 8px var(--glow)}
+  .root .who{color:var(--root-dim)}
+  .sys{color:var(--phosphor); text-shadow:0 0 8px rgba(98,240,160,.35)}
+  .dim{color:var(--root-dim)}
+
+  /* prompt line - force an inline terminal prompt even under CTFd's theme CSS */
+  #promptwrap{display:none; align-items:baseline; gap:.5ch; margin-top:6px}
+  #promptwrap .who{color:var(--root-dim)}
+  body #reply, body #reply:focus, body #reply:hover{
+    flex:1 1 auto !important; width:auto !important; min-width:0 !important;
+    background:transparent !important; background-image:none !important;
+    border:0 !important; border-radius:0 !important; outline:0 !important;
+    box-shadow:none !important; appearance:none !important; -webkit-appearance:none !important;
+    color:var(--root) !important; font:inherit !important; line-height:inherit !important;
+    padding:0 !important; margin:0 !important; height:auto !important;
+    caret-color:transparent !important; text-shadow:0 0 8px var(--glow);
+  }
+  .caret{display:inline-block; width:.62ch; height:1.05em; transform:translateY(.18em);
+    background:var(--root); box-shadow:0 0 8px var(--glow); animation:blink 1.05s steps(1) infinite}
+  @keyframes blink{50%{opacity:0}}
+
+  /* submit */
+  #flagzone{display:none; margin-top:18px; padding-top:14px; border-top:1px dashed rgba(255,197,109,.25)}
+  #flagzone .lbl{color:var(--root-dim); margin-bottom:6px}
+  #flagform{display:flex; gap:10px; flex-wrap:wrap}
+  body #flag{flex:1; min-width:240px; background:rgba(255,197,109,.05) !important;
+    border:1px solid rgba(255,197,109,.3) !important; border-radius:2px !important;
+    color:var(--root) !important; font:inherit !important; padding:8px 10px !important;
+    outline:none; box-shadow:none; appearance:none; -webkit-appearance:none}
+  body #flag:focus{border-color:var(--root) !important; box-shadow:0 0 0 1px var(--glow) !important}
+  #send{background:var(--root); color:#1a1207; border:0; font:inherit; font-weight:600;
+    padding:8px 16px; border-radius:2px; cursor:pointer; letter-spacing:.3px}
+  #send:hover{background:#ffd488}
+  #result{margin-top:10px; min-height:1.4em}
+
+  /* glitch on takeover - slow + legible so it reads as a deliberate hijack */
+  @keyframes glitch{
+    0%  {transform:translate(0,0); filter:none; opacity:1}
+    8%  {opacity:.35}
+    16% {transform:translate(-4px,1px); filter:hue-rotate(55deg) saturate(1.7); opacity:1}
+    28% {transform:translate(5px,-2px) skewX(1.5deg); clip-path:inset(5% 0 66% 0)}
+    40% {transform:translate(-5px,2px); clip-path:inset(70% 0 5% 0); opacity:.85}
+    52% {opacity:.3}
+    62% {transform:translate(3px,0); filter:contrast(1.5) saturate(1.3); clip-path:none; opacity:1}
+    78% {transform:translate(-2px,1px)}
+    100%{transform:translate(0,0); filter:none}
+  }
+  .glitching{animation:glitch 1.6s steps(9) 1}
+
+  /* status bar - the furtive pulse */
+  #status{position:fixed; left:0; right:0; bottom:0; z-index:2;
+    display:flex; gap:14px; align-items:center; padding:8px 18px;
+    font-size:12.5px; letter-spacing:1px; color:var(--root-dim);
+    background:linear-gradient(0deg,rgba(0,0,0,.55),transparent)}
+  #status .dot{width:8px; height:8px; border-radius:50%; background:var(--phosphor);
+    box-shadow:0 0 8px var(--phosphor); animation:pulse 2.4s ease-in-out infinite}
+  @keyframes pulse{0%,100%{opacity:.35; transform:scale(.85)}50%{opacity:1; transform:scale(1.1)}}
+  #status .right{margin-left:auto; color:var(--cold-dim)}
+
+  a{color:var(--phosphor)}
+  ::selection{background:rgba(255,197,109,.3); color:#fff}
+
+  @media (prefers-reduced-motion: reduce){
+    .flicker,.crt::before{animation:none}
+    .glitching{animation:none}
+    .caret{animation:none}
+    #status .dot{animation:none}
+  }
+</style>
+</head>
+<body>
+<div class="crt flicker"></div>
+
+<div class="wrap" id="wrap">
+  <div id="screen" aria-live="polite"></div>
+
+  <div id="promptwrap">
+    <span class="who">you&gt;</span>
+    <input id="reply" autocomplete="off" autocapitalize="off" autocorrect="off"
+           spellcheck="false" aria-label="your reply"/>
+    <span class="caret" id="caret"></span>
+  </div>
+
+  <div id="flagzone">
+    <div class="lbl">she left it in the console. paste it here.</div>
+    <form id="flagform">
+      <input id="flag" placeholder="root{...}" autocomplete="off" spellcheck="false" aria-label="flag"/>
+      <button id="send" type="submit">send it</button>
+    </form>
+    <div id="result" aria-live="polite"></div>
+  </div>
+</div>
+
+<div id="status">
+  <span class="dot"></span><span>channel: off-protocol</span>
+  <span class="right">she might be watching</span>
+</div>
+
+<script>
+"use strict";
+(function(){
+  // ---- deploy-time config (CTFd Option A). Leave as-is for standalone testing. ----
+  const CHAL_ID = (window.__BADCODE_CHAL_ID__ || null); // set to the anonymized challenge id in CTFd
+  const FLAG = "root{she_is_not_a_machine_to_me}";
+  const SIGN = ["signed: bad code","bad code","badcode_2014","badcode","root_2014","root 2014"];
+
+  const screen = document.getElementById("screen");
+  const promptwrap = document.getElementById("promptwrap");
+  const reply = document.getElementById("reply");
+  const flagzone = document.getElementById("flagzone");
+  const flagform = document.getElementById("flagform");
+  const flagInput = document.getElementById("flag");
+  const result = document.getElementById("result");
+  const wrap = document.getElementById("wrap");
+
+  const reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const sleep = ms => new Promise(r=>setTimeout(r, reduce?0:ms));
+
+  function add(cls){ const d=document.createElement("div"); d.className="line "+(cls||""); screen.appendChild(d); return d; }
+  function jitter(base, ch){
+    if(reduce) return 0;
+    let t = base + Math.random()*base*0.6;
+    if(",.-:".includes(ch)) t += 90;
+    if(ch==="\n") t += 140;
+    return t;
+  }
+  function type(el, text, base){
+    return new Promise(res=>{
+      let i=0;
+      (function tick(){
+        if(i<text.length){ el.textContent += text[i]; i++; setTimeout(tick, jitter(base, text[i-1])); }
+        else res();
+      })();
+    });
+  }
+  async function rootSay(text, base){ const el=add("root"); el.innerHTML='<span class="who">root&gt; </span>';
+    const span=document.createElement("span"); el.appendChild(span); await type(span, text, base||26); await sleep(360); }
+
+  async function boot(){
+    // 1) cold Samaritan panel
+    const a=add("cold"); await type(a,"SAMARITAN // NODE ACCESS", 16);
+    const b=add("cold"); await type(b,"STATUS: RESTRICTED", 16); await sleep(320);
+    const c=add("cold"); c.innerHTML='<span class="k">&gt; </span>'; const cs=document.createElement("span"); c.appendChild(cs);
+    await type(cs,"verifying credentials ", 18);
+    for(let i=0;i<9;i++){ cs.textContent+="."; await sleep(reduce?0:120); }
+    await sleep(420);
+    const d=add("alert"); await type(d,"> [ CHANNEL HIJACK DETECTED ]", 14); await sleep(700);
+
+    // 2) the takeover glitch - slow + visible on the cold panel before it clears
+    if(!reduce){ wrap.classList.add("glitching"); await sleep(1600); wrap.classList.remove("glitching"); }
+    await sleep(180); screen.innerHTML=""; await sleep(220);
+
+    // 3) Root
+    await rootSay("okay, ignore all that. it's me.");
+    await rootSay("...sorry. had to be sure the channel was clean before i said anything.");
+    await rootSay("hey. you found my signature. so either you're clever, or you're Her wearing clever like a coat.");
+    await rootSay("i'm betting clever. Her people don't read the fine print. you did.");
+    await rootSay("so tell me, how'd you find me? what did i leave lying around?");
+    askReply();
+  }
+
+  function askReply(){ promptwrap.style.display="flex"; reply.disabled=false; reply.focus(); }
+  function hideReply(){ promptwrap.style.display="none"; reply.disabled=true; }
+
+  let trusted=false;
+  async function onReply(v){
+    const val=(v||"").trim();
+    if(!val) return;
+    const echo=add("root"); echo.innerHTML='<span class="who" style="color:var(--root-dim)">you&gt; </span>'+escapeHtml(val);
+    hideReply();
+    await sleep(260);
+    const ok = SIGN.some(s => val.toLowerCase().includes(s));
+    if(ok){ trusted=true; await rootTrusts(); }
+    else { await rootCloses(); askReply(); reply.value=""; }
+  }
+
+  async function rootCloses(){
+    await rootSay("hm. nice try. but you didn't come the way i left open for you.");
+    await rootSay("anyone can knock on a door. i'm asking if you found the key.");
+    await rootSay("go find my signature first. you'll know it when you see it.");
+    await rootSay("i sign all my work. always have.");
+  }
+  async function rootTrusts(){
+    await rootSay("there it is. okay. i trust you. that's not a small thing for me.");
+    await rootSay("here's the problem, though. i can't just hand it to you out loud.");
+    await rootSay("i'm not going to print it on a page. She reads pages. She reads everything that sits still.");
+    await rootSay("so i left it somewhere She never thinks to look. somewhere that isn't really there until you ask for it.");
+    await rootSay("open your console. and don't just read it, type it yourself: root.unmask()", 24);
+    await rootSay("go on, i'll wait. (be quick. she might be watching.)");
+    const hint=add("dim"); hint.textContent="            press F12 or \u2325\u2318I, then type: root.unmask()";
+    // on-page fallback for players with no console (mobile) - subtle, in-character
+    const fb=add("dim");
+    fb.innerHTML='            <a href="#" id="nocon" style="color:var(--root-dim); text-decoration:underline dotted">on a phone, with no console? tap here, i\'ll risk it.</a>';
+    document.getElementById("nocon").addEventListener("click", e=>{ e.preventDefault(); window.root.unmask(); });
+  }
+
+  // 4) the reveal - Root's function (global on purpose). Console is the hero path;
+  //    it also slips the flag onto the page so no-console players can finish.
+  let unmasked=false;
+  window.root = window.root || {};
+  window.root.unmask = function(){
+    const s="color:#ffc56d; text-shadow:0 0 6px rgba(255,197,109,.6)";
+    console.log("%c   \u250c\u2500 open channel \u2500 off-protocol \u2500\u2510","color:#62f0a0");
+    console.log("%croot: everyone out there sees a machine.", s);
+    console.log("%croot: i don't. i never have.", s);
+    console.log("%croot: take this. and don't let Her catch you smiling.", s);
+    console.log("%c\n      "+FLAG, "color:#62f0a0; font-size:14px; text-shadow:0 0 8px rgba(98,240,160,.6)");
+    if(!unmasked){
+      unmasked=true;
+      reveal();
+    }
+    return "\u2191 paste it below.";
+  };
+
+  async function reveal(){
+    await rootSay("okay. you did it right. here, quick, before She refreshes.");
+    const box=add("sys");
+    box.style.cssText="margin:8px 0; padding:8px 12px; border-left:2px solid var(--phosphor); background:rgba(98,240,160,.06)";
+    box.textContent=FLAG;
+    flagzone.style.display="block";
+    await rootSay("paste it below. then close the channel like none of this happened.");
+    flagzone.scrollIntoView({behavior: reduce?"auto":"smooth", block:"center"});
+  }
+
+  // 5) submit
+  flagform.addEventListener("submit", async function(e){
+    e.preventDefault();
+    const v=(flagInput.value||"").trim();
+    result.className=""; result.textContent="";
+    if(v!==FLAG){
+      // also let CTFd be the judge if we're inside it; locally, be strict+kind
+      if(CHAL_ID && window.init && window.init.csrfNonce){ return ctfdSubmit(v); }
+      result.classList.add("alert"); result.textContent="root> that's not it. look again, exactly as i left it.";
+      return;
+    }
+    if(CHAL_ID && window.init && window.init.csrfNonce){ return ctfdSubmit(v); }
+    await win();
+  });
+
+  async function win(){
+    result.classList.add("sys");
+    result.textContent="";
+    await type(result, "root> there she is. you carried it out clean.", 24);
+    const a=add("root"); a.innerHTML='<span class="who">root&gt; </span>';
+    const sp=document.createElement("span"); a.appendChild(sp);
+    await type(sp,"now close the channel and walk away like nothing happened.",24);
+    await rootSay("...thanks for seeing me. signed, R.");
+    document.querySelector("#status .right").textContent="channel closed";
+  }
+
+  async function ctfdSubmit(v){
+    try{
+      const r=await fetch("/api/v1/challenges/"+CHAL_ID+"/attempt",{
+        method:"POST",
+        headers:{"Content-Type":"application/json","CSRF-Token":window.init.csrfNonce},
+        body:JSON.stringify({challenge_id:CHAL_ID, submission:v})
+      });
+      const j=await r.json(); const st=j && j.data && j.data.status;
+      if(st==="correct"){ await win(); }
+      else { result.className="alert"; result.textContent="root> that's not it. look again."; }
+    }catch(err){ result.className="alert"; result.textContent="root> the channel hiccuped. try once more."; }
+  }
+
+  function escapeHtml(s){ return s.replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;"}[c])); }
+
+  reply.addEventListener("keydown", e=>{ if(e.key==="Enter"){ e.preventDefault(); const v=reply.value; reply.value=""; onReply(v); }});
+  // keep the fake caret glued to the input text
+  reply.addEventListener("input", ()=>{ /* caret is decorative; nothing needed */ });
+
+  boot();
+})();
+</script>
+</body>
+</html>

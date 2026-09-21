@@ -1,0 +1,46 @@
+# ctfcli challenge spec. Contains the flag.
+name: "Endgame"
+author: "XposedOrNot"
+category: "PoI"
+type: standard
+value: 450
+state: visible
+version: "0.1"
+
+description: |
+  [ FILE REF: S3E8 "ENDGAME" // THE CALL ]
+
+  You found her. You caught the witness lying. Now you finish it.
+
+  Something is coming, and it is coming soon. I gave you a number at
+  the start and told you the evidence looked dishonest. It was. The
+  person the evidence wanted you to fear is the person it was built
+  to bury.
+
+  Put it together. All of it. The cache she carried, the records, the
+  lie. Tell me who is about to commit a crime, and where, and when.
+
+  Give me the number. Not the one I started with. The right one.
+
+  I will do the rest.
+
+    [ full dossier attached ]
+
+    - THE MACHINE
+
+flags:
+  - "number{304771592}"
+
+tags:
+  - "P450"
+
+files:
+  - files/3b6a10347800c543.zip
+
+hints:
+  - content: "Stop treating Maya as the suspect. Re-read the cache she was carrying and ask what it is actually evidence of, and who had a reason to make her look dangerous. The answer to 'who is the threat' changed two acts ago."
+    cost: 70
+  - content: "Pierce's crime is in the records, his data exports, tied to his account. Those same IDs give you his designation, the way you assembled Maya's in P100. His plan to act on her is in the dossier too: when, and where (you have seen the place before)."
+    cost: 140
+  - content: "Assemble Pierce's designation from his badge ID (the P250 access log) and his account ID (the transactions), plus the cache fragment. That designation is the flag, you are telling the Machine who to stop. Maya's number is the trap the evidence was built to make you pick; it will not validate."
+    cost: 210

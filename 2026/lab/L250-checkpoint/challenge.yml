@@ -1,0 +1,47 @@
+# ctfcli challenge spec. Contains the flag.
+name: "Checkpoint"
+author: "XposedOrNot"
+category: "Lab"
+type: standard
+value: 250
+state: visible
+version: "0.1"
+
+description: |
+  [ FILE REF: S5E10 "THE DAY THE WORLD WENT AWAY" ]
+
+  A node went dark three weeks ago. Decima had it first.
+
+  Before it was seized, an operator ran a purge - one record,
+  erased on a written order. The deletion was committed.
+
+  It was not finished.
+
+  The database will tell you the record is gone. The database
+  is wrong. A system writes ahead of itself; it speaks before
+  it remembers. They told the table to forget her. They did
+  not wait for the log to agree with the table.
+
+  The node is read-only. Handle it the wrong way and you will
+  finish the purge for them.
+
+  Connect. Recover what they erased. Tell me who she was.
+
+    - THE MACHINE
+
+    ssh investigator@<host> -p 2222     (read-only; password in description)
+
+flags:
+  - "number{the_log_remembers_what_the_table_forgot}"
+
+tags:
+  - "L250"
+
+files:
+  - files/3d44a3e47901c9c1.tar.gz
+
+hints:
+  - content: "Treat this like real evidence: image before you analyze. This database is in WAL mode (.db + .db-wal + .db-shm) and was seized before it checkpointed. Work on a COPY of all three files, if you open the original in a normal SQLite client it will checkpoint the WAL and erase exactly what you are looking for. The -shm is just a shared-memory index; the deleted data lives in the -wal."
+    cost: 40
+  - content: "Carve the -wal for deleted rows. The WAL is a documented frame format, so a tool like sqlite_dissect or walitean, or a short frame-parser of your own, all work. You will recover several deleted rows, most are decoys and a couple are near-misses. Use the analyst_log lead to pick the real target, then base64-decode its intel: the right one decodes to readable English, the decoys decode to junk."
+    cost: 80

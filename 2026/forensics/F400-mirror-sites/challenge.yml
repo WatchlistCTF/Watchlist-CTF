@@ -1,0 +1,51 @@
+# ctfcli challenge spec. Contains the flag.
+name: "Mirror Sites"
+author: "XposedOrNot"
+category: "Forensics"
+type: standard
+value: 400
+state: visible
+version: "0.1"
+
+description: |
+  [ FILE REF: DECIMA CLOUD SERVICES // CLIENT DATA FLOW - NORTHERN LIGHTS ]
+
+  A senior engineer at Decima Cloud Services moved a client dataset
+  out of the company and into a place it was never meant to go.
+  One Tuesday night. 23:43 to 02:17. Then they went home.
+
+  They were careful. The data did not leave in one step. It was
+  read in one cloud, staged in a second, mirrored into a third -
+  a personal tenant. No single provider saw the whole thing. Each
+  one logged a fragment and assumed the fragment was harmless.
+
+  Afterward, they cleaned up. They overwrote what they could and
+  deleted the rest. The current state of every bucket looks innocent.
+
+  I have all three logs. They do not agree. They do not even use
+  the same clock. But the data carried the same fingerprint into
+  every cloud it touched, and I do not forget a fingerprint.
+
+  Reconstruct the night. Prove it was one person, one object,
+  three clouds. Tell me what they took.
+
+    - THE MACHINE
+
+    Download: nl-incident-2026.tar.gz  (~180 MB)
+
+flags:
+  - "number{the_clouds_do_not_speak_to_each_other_but_we_do}"
+
+tags:
+  - "F400"
+
+files:
+  - files/a093033e707206da.tar.gz
+
+hints:
+  - content: "The logs you reach for first, GCP Admin Activity, AWS CloudTrail, Azure Activity Log, are blind to data movement on purpose. The theft is in the logs analysts forget: GCS usage logs, S3 server access logs, Azure StorageBlobLogs."
+    cost: 50
+  - content: "Three clouds, one object. Each stores the object's MD5 in a different dialect: GCS md5Hash in base64, S3 ETag in hex, Azure Content-MD5 in base64. Normalize them and find the one object whose fingerprint matches in all three. Ignore crc32c; only GCP has it."
+    cost: 100
+  - content: "They cleaned up: the S3 object was overwritten, so take the noncurrent version and not the latest, and the Azure blob was soft-deleted, so include deleted blobs. The flag is three base64 fragments in the mfrag metadata of the matched object, one per cloud. Order them by the path the data took, GCP then AWS then Azure, then decode and concatenate."
+    cost: 150

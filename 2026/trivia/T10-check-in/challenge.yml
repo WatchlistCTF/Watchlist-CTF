@@ -1,0 +1,27 @@
+# ctfcli challenge spec. Contains the flag.
+name: "Check-In"
+author: "XposedOrNot"
+category: "Trivia"
+type: standard
+value: 10
+state: visible
+version: "0.1"
+
+description: |
+  [ FIRST CONTACT // ARE YOU THERE ]
+
+  If you're reading this, you found the way in. Before anything else, I need to know the channel is open. Answer the question on the welcome page. It is the only question I will ever ask you twice.
+
+  Can you hear ___?
+
+  - THE MACHINE
+
+flags:
+  - "number{me}"
+
+tags:
+  - "T10"
+
+files: []
+
+hints: []

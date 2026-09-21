@@ -1,0 +1,36 @@
+# ctfcli challenge spec. Contains the flag.
+name: "Shadow Box"
+author: "XposedOrNot"
+category: "Forensics"
+type: standard
+value: 200
+state: visible
+version: "0.1"
+
+description: |
+  [ FILE REF: S2E10 "SHADOW BOX" // DECIMA TECHNOLOGIES - INTERNAL MEMORANDUM ]
+
+  A document arrived this morning, courier-delivered, sealed. Internal memo from Decima Technologies - a project review the asset committed to acquire before extraction. It clears three names. Says they were never targeted. Says the program was wound down in March.
+
+  I cannot tell whether the document is true. The lawyers have already accepted it.
+
+  But the document has been touched. By the people who sent it. By the people who altered it. By the people who tried to erase the alterations. Each of them left their work on top of the work before them. They did not erase. They covered.
+
+  Read what is under the cover. Tell me what the document originally said.
+
+  - THE MACHINE
+
+flags:
+  - "number{greer_targeted_contingency}"
+
+tags:
+  - "F200"
+
+files:
+  - files/20769767962808ed.pdf
+
+hints:
+  - content: "The document has been saved more than once. Saved files remember every save."
+    cost: 40
+  - content: "Three layers. Three tools. The original text. The embedded picture they forgot to remove. The script that calls home."
+    cost: 80

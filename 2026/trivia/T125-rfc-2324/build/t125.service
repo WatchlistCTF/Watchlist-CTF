@@ -1,0 +1,15 @@
+[Unit]
+Description=WATCHLIST CTF T125 HTCPCP Coffee Pot Server
+After=network.target
+
+[Service]
+User=ubuntu
+WorkingDirectory=/home/ubuntu/t125
+ExecStart=/usr/bin/python3 /home/ubuntu/t125/t125_htcpcp.py
+Restart=always
+RestartSec=5
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target

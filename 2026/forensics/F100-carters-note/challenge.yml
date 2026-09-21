@@ -1,0 +1,44 @@
+# ctfcli challenge spec. Contains the flag.
+name: "Carter's Note"
+author: "XposedOrNot"
+category: "Forensics"
+type: standard
+value: 100
+state: visible
+version: "0.1"
+
+description: |
+  [ FILE REF: S3E9 "THE CROSSING" ]
+
+  Detective Joss Carter was killed in November of last year.
+  Her death is filed as a closed homicide. It is not.
+
+  Her effects included a USB drive. I have imaged it.
+  It contains the public surface of her life: case notes,
+  family photographs, her son's school papers.
+
+  It also contains four files she deleted before she was killed.
+
+  She was a careful detective. She did not delete by accident.
+  One of those files is the work. The others are her cover.
+
+  Find what she did not want them to find.
+
+  - THE MACHINE
+
+  Download: usb-0412-a.img.gz (24 MB)
+
+flags:
+  - "number{her_witness_was_still_breathing}"
+
+tags:
+  - "F100"
+
+files:
+  - files/488e9231c060b7c7.zip
+
+hints:
+  - content: "She deleted four files. One is mundane, one is emotional, two are operational. Read them all carefully."
+    cost: 20
+  - content: "Carter split her work. Look for strings that look like base64. Decode them. Combine in the order she described."
+    cost: 40

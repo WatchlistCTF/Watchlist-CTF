@@ -1,0 +1,49 @@
+# ctfcli challenge spec. Contains the flag.
+name: "Legion"
+author: "XposedOrNot"
+category: "Lab"
+type: standard
+value: 300
+state: visible
+version: "0.1"
+
+description: |
+  [ FILE REF: S4E11 "If-Then-Else" // INTERCEPT :: DISTRIBUTED CHECK-IN ]
+
+  It does not live in one place. That is how it hides.
+
+  SAMARITAN runs its errands through a hundred small machines,
+  scattered across a hundred countries. Each wakes, reports, and
+  sleeps. Alone, each one is noise. Together, they are a net.
+
+  I caught them talking - one capture, a hundred voices buried in
+  the static of a thousand more that do not matter.
+
+  Pull them apart. Find all hundred. Name each one to me and I
+  will light it on the board as you go. You will not do this by
+  hand.
+
+  When the last light comes on, the net is mine - and the number
+  is yours.
+
+    Artifact:  intercept.pcap
+    Board:     nc <host> <port>      (watch it fill as you submit)
+    Submit:   POST findings to <host>/submit
+    Flag:      released when all 100 nodes are unmasked
+
+flags:
+  - "number{a_hundred_faces_one_machine}"
+
+tags:
+  - "L300"
+
+files:
+  - files/a342e7530aec5e66.pcap
+
+hints:
+  - content: "Do not read the packets, summarize them. One destination receives far more than any other, that is the hub. Group every packet by source and look at the timing of each source's packets to the hub."
+    cost: 50
+  - content: "Real implants beacon on a steady rhythm; the noise is irregular. For each source, compare the spread of its inter-packet gaps to their average (the coefficient of variation). A low value is a beacon. Exactly one hundred sources qualify."
+    cost: 100
+  - content: "Each beacon's payload is XOR-obfuscated with a single byte (0x5A). Decode it to a country-and-hash token. Submit all one hundred to the board endpoint, back off on a 429, and watch the map fill. The flag is released at 100 of 100."
+    cost: 150

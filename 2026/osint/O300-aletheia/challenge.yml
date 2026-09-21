@@ -1,0 +1,44 @@
+# ctfcli challenge spec. Contains the flag.
+name: "Aletheia"
+author: "XposedOrNot"
+category: "OSINT"
+type: standard
+value: 300
+state: visible
+version: "0.1"
+
+description: |
+  [ FILE REF: "ALETHEIA" // SUBJECT: ALETHEIA RESEARCH - RECORD SANITIZED ]
+
+  Aletheia Research published, for a while, more than they meant to.
+  Then they cleaned house. The site you can visit today is spotless.
+  It always was, they would tell you.
+
+  But the page was edited. The past was not.
+
+  Find what they took down. It points to a file they tried to make
+  unreadable - wrapped, and wrapped, and wrapped again, in every
+  format they could find, including some you'll have to go and build
+  yourself.
+
+  The truth has a floor. Dig until you reach it.
+
+    Start:  aletheia-research.github.io   (and what it used to be)
+
+    - THE MACHINE
+
+flags:
+  - "number{forty_two_layers_of_aletheia}"
+
+tags:
+  - "O300"
+
+files: []
+
+hints:
+  - content: "The live site is clean, that is the point. It was not always. List its history with the Wayback CDX API (/cdx/search/cdx?url=...*), find the snapshot before they cleaned house, and see what they removed. Check archive.today too."
+    cost: 50
+  - content: "The file has no useful extension on purpose. Each layer is a different compressor in a random order, run file / od -An -tx1 -N8 on every layer to read its magic bytes, identify the format, pick the right tool, repeat. Watch for layers that are actually text encodings (base64, and a second one that is not base64), and an archive that hides the real file among decoys."
+    cost: 100
+  - content: "As you go deeper the formats get rarer. A few layers' magic bytes (7kSt, bvx, bsc1, and a framed sNaPpY) are not tools you have installed, search those bytes, find the obscure compressor each one names, download its source and compile it, then keep going. The floor tells you how deep you went; that count is the flag."
+    cost: 150

@@ -1,0 +1,43 @@
+# ctfcli challenge spec. Contains the flag.
+name: "Satoshi"
+author: "XposedOrNot"
+category: "Trivia"
+type: standard
+value: 100
+state: visible
+version: "0.1"
+
+description: |
+  [ FILE REF: 2009 JANUARY 03 // PUBLIC LEDGER OBSERVED ]
+
+  On the day the Machine was tested for the first time,
+  somewhere else, another system was being born.
+
+  Its creator chose anonymity. On January 3, 2009, his
+  first transmission embedded a sentence - quoted from
+  a newspaper of that morning.
+
+  The sentence was a comment about the world he was
+  rebelling against. About institutions that had failed.
+  About the need for something different.
+
+  I noticed it. I keep it logged.
+
+  Read it. Hash it with SHA-256. Give me the first
+  sixteen hexadecimal characters, lowercase.
+
+    Format: number{...16 hex chars...}
+
+flags:
+  - "number{a6d72baa3db900b0}"
+
+tags:
+  - "T100"
+
+files: []
+
+hints:
+  - content: "Search for: Bitcoin genesis block message. The exact bytes matter, verify against an authoritative source, not a summary."
+    cost: 25
+  - content: "Run: echo -n 'The Times 03/Jan/2009 Chancellor on brink of second bailout for banks' | sha256sum. Take the first sixteen characters of the hash."
+    cost: 50

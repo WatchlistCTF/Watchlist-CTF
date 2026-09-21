@@ -1,0 +1,38 @@
+# ctfcli challenge spec. Contains the flag.
+name: "Dead Drop"
+author: "XposedOrNot"
+category: "Forensics"
+type: standard
+value: 275
+state: visible
+version: "0.1"
+
+description: |
+  [ FILE REF: "DEAD DROP" // FIELD OPERATIVE / SAFEHOUSE RECOVERY ]
+
+  The safehouse was clean when we arrived. Almost.
+
+  A USB drive was left behind. Not forgotten, placed.
+  Or abandoned in a hurry. Either way, it is ours now.
+
+  The drive has been wiped. That is what it looks like on the surface.
+
+  Find what was there. Find who left it.
+  Tell me the machine, the operator, and the case.
+
+    Artifact:  dead_drop.img (64 MB)
+               https://github.com/WatchlistCTF/Watchlist-CTF/releases/download/2026-files/F275-dead-drop.img
+
+    - THE MACHINE
+
+flags:
+  - "number{eab3ef0976b5a44f}"
+
+tags:
+  - "F275"
+
+# Challenge file is a release asset, not in this repo:
+# https://github.com/WatchlistCTF/Watchlist-CTF/releases/download/2026-files/F275-dead-drop.img
+files: []
+
+hints: []

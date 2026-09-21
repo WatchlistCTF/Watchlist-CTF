@@ -1,0 +1,33 @@
+# Large artifacts are release assets, not in git (GitHub rejects files over 100 MB)
+*.img
+*.img.gz
+*.iso
+*.ova
+*.ovf
+*.vmdk
+*.vdi
+*.qcow2
+*.raw
+*.mem
+*.lime
+*.7z
+*.xz
+
+# Never commit
+backups/
+*.sql
+.env
+*.pem
+*.key
+*backup_codes*
+
+# OS / editor noise
+.DS_Store
+Thumbs.db
+*.swp
+.vscode/
+.idea/
+__pycache__/
+
+# Exceptions: small build inputs kept in-repo (the general rules above block large artifacts)
+!2026/forensics/F275-dead-drop/build/drop_archive_inner.7z

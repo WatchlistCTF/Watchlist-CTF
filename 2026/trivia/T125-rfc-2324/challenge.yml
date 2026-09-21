@@ -1,0 +1,40 @@
+# ctfcli challenge spec. Contains the flag.
+name: "RFC 2324"
+author: "XposedOrNot"
+category: "Trivia"
+type: standard
+value: 125
+state: visible
+version: "0.1"
+
+description: |
+  [ FILE REF: NODE INVENTORY // UNCLASSIFIED // BREAK ROOM ]
+
+  I catalog every device on the network. Most are interesting.
+  This one makes coffee.
+
+  It is old, and it is particular. It will not answer to a browser,
+  and it will not answer to the wrong request. It follows a standard
+  written long ago, more carefully than the people who wrote it
+  intended.
+
+  Ask it properly, and it will pour. Ask it wrong, and it will remind
+  you what it is.
+
+  BREW-STATION :: [ endpoint ]
+
+    - THE MACHINE
+
+flags:
+  - "number{the_machine_takes_it_black}"
+
+tags:
+  - "T125"
+
+files: []
+
+hints:
+  - content: "That 418 is not a bug and it is not the flag, it is a pointer. The node speaks the Hyper Text Coffee Pot Control Protocol, RFC 2324. A browser cannot talk to it; you need a tool that lets you choose the method and headers (curl)."
+    cost: 20
+  - content: "RFC 2324 defines a custom method to start a brew, a specific Content-Type, and what to put in the body. Use all three: curl -X BREW -H 'Content-Type: message/coffeepot' -d 'start' <endpoint>/pot-0."
+    cost: 40

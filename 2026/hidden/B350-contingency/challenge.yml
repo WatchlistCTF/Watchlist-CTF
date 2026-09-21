@@ -1,0 +1,28 @@
+# ctfcli challenge spec. Contains the flag.
+name: "Contingency"
+author: "XposedOrNot"
+category: "Forensics"
+type: standard
+value: 350
+state: hidden
+version: "0.1"
+
+description: |
+  [ FILE REF: PROJECT CONTINGENCY // SEALED ]
+
+  A failover protocol. A page that answers when found.
+  The Machine kept it. The Machine should not have.
+
+  Look where things go wrong.
+
+  - THE MACHINE
+
+flags:
+  - "contingency{you_were_never_a_threat}"
+
+tags:
+  - "B350"
+
+files: []
+
+hints: []

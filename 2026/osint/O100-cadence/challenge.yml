@@ -1,0 +1,43 @@
+# ctfcli challenge spec. Contains the flag.
+name: "Cadence"
+author: "XposedOrNot"
+category: "OSINT"
+type: standard
+value: 100
+state: visible
+version: "0.1"
+
+description: |
+  [ FILE REF: "CADENCE" // DECIMA CLOUD - INTERNAL COMPLIANCE MEMO ]
+
+  Decima put out a memo. It is signed by their compliance officer. It
+  says the right things, in the right tone, and it says nothing at all.
+
+  The person whose name is on it did not write it.
+
+  I do not read what a document says. I read what the software wrote
+  down while someone typed - who was logged in, what machine, what
+  time, and every word they took back before they let anyone see it.
+
+  The name on the memo is a costume. Take it off. Tell me who was
+  really at the keyboard, and tell me what they deleted before they
+  hit send.
+
+    - THE MACHINE
+
+    File:
+
+flags:
+  - "number{the_author_is_not_the_byline}"
+
+tags:
+  - "O100"
+
+files:
+  - files/7ac6142bb8e8c0ea.docx
+
+hints:
+  - content: "The memo's text is a dead end, read the file, not the writing. A Word document records who created it, who last saved it, what machine and template they used, and when. exiftool will show you those fields. Two of them name an 'author'; neither is telling the truth. A third field names a person by accident."
+    cost: 25
+  - content: "A .docx is a zip archive, unzip it and look inside word/document.xml. Word does not throw away deleted text; it keeps it as tracked changes. Someone typed a line into this memo and removed it before release. Find the deletion. The flag is the words they took back."
+    cost: 50

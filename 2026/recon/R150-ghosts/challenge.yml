@@ -1,0 +1,45 @@
+# ctfcli challenge spec. Contains the flag.
+name: "Ghosts"
+author: "XposedOrNot"
+category: "Recon"
+type: standard
+value: 150
+state: visible
+version: "0.1"
+
+description: |
+  [ FILE REF: S1E2 "GHOSTS" // NORTHERN LIGHTS RELAY - DECOMMISSIONED, STILL LIT ]
+
+  Northern Lights ran more nodes than anyone will admit. Most were
+  torn down. The records were pulled, the links cut, the names
+  scrubbed from every directory they controlled.
+
+  They forgot the one thing they never controlled.
+
+  Every node that spoke securely had to ask a public authority for a
+  certificate - and every such request is witnessed, then written into
+  a ledger that anyone can read and no one can erase. One of those
+  nodes is a ghost now: unlisted, unlinked, unguessable.
+
+  But the ledger still remembers its name.
+
+    Start here:   northernlights.gg
+
+  Read the record of what was issued. Find the relay that should be
+  dark. Then knock.
+
+    - THE MACHINE
+
+flags:
+  - "number{ghosts_leave_certificates}"
+
+tags:
+  - "R150"
+
+files: []
+
+hints:
+  - content: "The 'ledger that anyone can read and no one can erase' is Certificate Transparency, every TLS certificate ever issued is logged publicly. Search the CT logs for northernlights.gg. subfinder -d northernlights.gg is the easiest way in. crt.sh is the classic search but is often overloaded; Cert Spotter works too but rate-limits unauthenticated users, so run it once, not in a loop."
+    cost: 30
+  - content: "CT will show a wildcard (which hides names) plus several specific subdomains. Most of the relay names are dead now, probe each one. Exactly one still answers. The flag is on its page."
+    cost: 60

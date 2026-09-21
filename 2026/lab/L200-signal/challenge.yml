@@ -1,0 +1,42 @@
+# ctfcli challenge spec. Contains the flag.
+name: "Signal"
+author: "XposedOrNot"
+category: "Lab"
+type: standard
+value: 200
+state: visible
+version: "0.1"
+
+description: |
+  [ FILE REF: S2E16 "RELEVANCE" // SIGNAL IN THE NOISE ]
+
+  A workstation inside Aletheia was talking to something it shouldn't.
+  Not loudly. A whisper, folded into a day of ordinary lookups - the
+  kind of traffic nobody reads because there is too much of it.
+
+  I captured the day. Ten hours of DNS. Somewhere in it, an implant
+  called out and something answered.
+
+  I do not need you to run anything. I need you to READ. Find what it
+  said, find what it was told to say, and ask the same question it did.
+  Whatever answers you - that is what it came for.
+
+    [ intercept.pcap attached - one full day ]
+    - THE MACHINE
+
+flags:
+  - "number{the_config_was_the_payload}"
+
+tags:
+  - "L200"
+
+files:
+  - files/5dde59ee766dcf93.pcap
+
+hints:
+  - content: "It is a full day of DNS, do not read it, filter it. Start with TXT records (tshark -Y dns.txt -r intercept.pcap). Most TXT traffic is legitimate (SPF, ACME tokens, those base64 strings are a normal decoy). You are looking for the one domain whose TXT answers are many, sequential, and carry chunked data."
+    cost: 30
+  - content: "The chunked TXT answers on the relay domain are tagged v1;<n>/<total>;<data>. Order them by n, concatenate the data, base64-decode, you get a Perl script. Read it, do not run it: it is a simple client that GETs a C2 URL with a sid parameter. Note the URL."
+    cost: 60
+  - content: "The sid is not in the script, the implant exfiltrated it separately. Look at the enroll.rl7f3a.net lookups: each query name hides one character of the key in its subdomain labels, with a sequence number. Assemble them into the sid, then request the C2 URL yourself with that sid. The config it returns has a base64 auth_token, decode it. A wrong sid returns a standby decoy, so get the key right."
+    cost: 90

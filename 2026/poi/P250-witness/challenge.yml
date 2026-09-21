@@ -1,0 +1,43 @@
+# ctfcli challenge spec. Contains the flag.
+name: "Witness"
+author: "XposedOrNot"
+category: "PoI"
+type: standard
+value: 250
+state: visible
+version: "0.1"
+
+description: |
+  [ FILE REF: S1E7 "WITNESS" // TESTIMONY RECEIVED ]
+
+  Someone came forward. Her manager, Daniel Pierce. He is calm, he is
+  specific, and he is certain: she stalked him, she threatened him,
+  she invented the evidence she's been carrying. He has proof.
+
+  It is a good story. It fits everything you already believe.
+
+  I do not deal in stories. I deal in records, and records do not
+  care what anyone is certain of. He gave me times. Check them.
+
+  Find where the story and the clock disagree.
+
+    [ case file attached ]
+
+    - THE MACHINE
+
+flags:
+  - "number{AR-ETH-884213}"
+
+tags:
+  - "P250"
+
+files:
+  - files/26bf84684d31d6f7.zip
+
+hints:
+  - content: "Do not argue with the statement, check it. Pierce gave exact times. Build a timeline from the records (the access log, Maya's device log) and ask one question: where was Maya actually at 21:00?"
+    cost: 40
+  - content: "The badge log shows she left at 18:30 and never came back, so she was not where he says. Her device log shows what she was doing at that moment, and it is specific. Find that activity."
+    cost: 80
+  - content: "At 21:00 she was filing an ethics complaint against Pierce. The complaint's case number is your flag. For your own certainty: check exhibit_A.jpg's metadata, it was doctored, and note Pierce badging into the restricted area, you will want that next."
+    cost: 120
